@@ -4,9 +4,10 @@
   flex-direction: column;
 }
 
-.App-history-container {
+.history-container {
   flex: 1;
+  overflow-y: scroll;
 }
 
-.App-input-container {
+.input-container {
 }

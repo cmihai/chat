@@ -3,6 +3,13 @@ import { Card, Typography } from '@material-ui/core';
 import './MessageHistory.css';
 
 class MessageHistory extends Component {
+    componentDidUpdate() {
+        let card = document.querySelector('.card:last-child');
+        if (!card)
+            return;
+        card.scrollIntoView();
+    }
+
     render() {
         let messages = [];
 

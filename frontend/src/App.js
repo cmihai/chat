@@ -25,7 +25,6 @@ class App extends Component {
     let req = new XMLHttpRequest();
     req.onreadystatechange = () => {
       if (req.readyState === 4 && req.status === 200) {
-        console.log(req.responseText);
         let messages = JSON.parse(req.responseText).map((m) => new Message(m));
 
         // Do not update state if not necessary
@@ -70,10 +69,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-history-container">
+        <div className="history-container">
           <MessageHistory messages={this.state.messages} />
         </div>
-        <div className="App-input-container">
+        <div className="input-container">
           <MessageInput sendMessage={this.sendMessage} />
         </div>
       </div>
