@@ -1,25 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import MessageHistory from './MessageHistory';
+import MessageInput from './MessageInput';
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: []
+    };
+  }
+
+  sendMessage = (text) => {
+    let newMessages = this.state.messages.slice(),
+        timestamp = new Date().getTime(),
+        userName = 'Bob',
+        userId = '12345';
+
+    newMessages.push({
+      userName: userName,
+      userId: userId,
+      text: text,
+      timestamp: timestamp,
+    });
+
+    this.setState({
+      messages: newMessages
+    });
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div className="App-history-container">
+          <MessageHistory messages={this.state.messages} />
+        </div>
+        <div className="App-input-container">
+          <MessageInput sendMessage={this.sendMessage} />
+        </div>
       </div>
     );
   }
