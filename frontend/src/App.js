@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MessageHistory from './MessageHistory';
 import MessageInput from './MessageInput';
+import { Message } from './models';
 import './App.css';
 
 class App extends Component {
@@ -18,12 +19,12 @@ class App extends Component {
         userName = 'Bob',
         userId = '12345';
 
-    newMessages.push({
+    newMessages.push(new Message({
       userName: userName,
       userId: userId,
       text: text,
       timestamp: timestamp,
-    });
+    }));
 
     this.setState({
       messages: newMessages

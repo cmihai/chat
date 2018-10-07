@@ -7,11 +7,10 @@ class MessageHistory extends Component {
         let messages = [];
 
         for (let msg of this.props.messages) {
-            let key = `${msg.timestamp}@${msg.userId}`;
-
-            messages.push(<Card className="card" key={key}>
+            messages.push(<Card className="card" key={msg.key}>
                     <Typography variant="caption">{msg.userName}</Typography>
                     <Typography variant="body1">{msg.text}</Typography>
+                    <Typography variant="caption">{msg.dateString}</Typography>
                 </Card>
             );
         }
