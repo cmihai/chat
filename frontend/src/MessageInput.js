@@ -23,7 +23,7 @@ class MessageInput extends Component {
                            onChange={(e) => this.setState({ message: e.target.value })}
                            onKeyUp={
                                (e) => {
-                                   if (e.keyCode == 13) {
+                                   if (e.keyCode === 13) {
                                        this.sendMessage();
                                    }
                                }
