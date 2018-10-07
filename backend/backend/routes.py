@@ -21,8 +21,8 @@ def get_messages():
             while row:
                 result.append({
                     "timestamp": row[0],
-                    "user_id": row[1],
-                    "user_name": row[2],
+                    "userId": row[1],
+                    "userName": row[2],
                     "text": row[3],
                 })
                 row = c.fetchone()
@@ -38,7 +38,7 @@ def add_message():
         with closing(db.cursor()) as c:
             c.execute(
                 "INSERT INTO messages (timestamp, user_id, user_name, message) VALUES (?, ?, ?, ?)",
-                (message["timestamp"], message["user_id"], message["user_name"], message["text"]),
+                (message["timestamp"], message["userId"], message["userName"], message["text"]),
             )
         db.commit()
     
