@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button, TextField } from '@material-ui/core';
+
 import './MessageInput.css';
 
 class MessageInput extends Component {
@@ -9,16 +11,27 @@ class MessageInput extends Component {
         };
     }
 
+    sendMessage = () => {
+        this.props.sendMessage(this.state.message);
+        document.getElementById('text').value = '';
+    }
+
     render() {
         return <div className="MessageInput">
             <div className="flex-1">
-                <input className="full-width" type="text" id="text" onChange={(e) => this.setState({ message: e.target.value })} />
+                <TextField className="full-width" autoFocus={true} id="text"
+                           onChange={(e) => this.setState({ message: e.target.value })}
+                           onKeyUp={
+                               (e) => {
+                                   if (e.keyCode == 13) {
+                                       this.sendMessage();
+                                   }
+                               }
+                           }
+                           />
             </div>
             <div>
-                <button id="send" onClick={() => {
-                    this.props.sendMessage(this.state.message);
-                    document.getElementById('text').value = '';
-                }}>Send</button>
+                <Button id="send" onClick={this.sendMessage}>Send</Button>
             </div>
         </div>;
     }
