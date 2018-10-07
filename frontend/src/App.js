@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setInterval(this.loadMessages.bind(this), 500);
+    setInterval(this.loadMessages.bind(this), 200);
   }
 
   /**
@@ -27,6 +27,11 @@ class App extends Component {
       if (req.readyState === 4 && req.status === 200) {
         console.log(req.responseText);
         let messages = JSON.parse(req.responseText).map((m) => new Message(m));
+
+        // Do not update state if not necessary
+        if (messages.length === this.state.messages.length)
+          return;
+
         this.setState({
           messages: messages
         });
@@ -59,12 +64,7 @@ class App extends Component {
           timestamp: timestamp,
         });
 
-    newMessages.push(message);
     this.putMessage(message);
-
-    this.setState({
-      messages: newMessages
-    });
   };
 
   render() {
