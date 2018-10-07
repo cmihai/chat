@@ -3,6 +3,7 @@ from contextlib import closing
 from flask import (
     Flask,
 )
+from flask_cors import CORS
 
 
 def create_app():
@@ -20,3 +21,4 @@ def create_app():
 
 
 app = create_app()
+CORS(app, origins=['http://localhost:3000'])
