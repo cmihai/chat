@@ -3,10 +3,12 @@ import { Card, Typography } from '@material-ui/core';
 import './MessageHistory.css';
 
 class MessageHistory extends Component {
+
     componentDidUpdate() {
         let card = document.querySelector('.card:last-child');
         if (!card)
             return;
+
         card.scrollIntoView();
     }
 
@@ -14,7 +16,14 @@ class MessageHistory extends Component {
         let messages = [];
 
         for (let msg of this.props.messages) {
-            messages.push(<Card className="card" key={msg.key}>
+            let cardClass = "card";
+
+            if (msg.userId === this.props.userId) {
+                cardClass += " your-message";
+            }
+
+            messages.push(
+                <Card className={cardClass} key={msg.key}>
                     <Typography variant="caption">{msg.userName}</Typography>
                     <Typography variant="body1">{msg.text}</Typography>
                     <Typography variant="caption">{msg.dateString}</Typography>

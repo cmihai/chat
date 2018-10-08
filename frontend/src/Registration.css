@@ -1,0 +1,14 @@
+.Registration {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Registration .card {
+    padding: 16px;
+}
+
+.Registration .headline {
+    margin-bottom: 16px;
+}

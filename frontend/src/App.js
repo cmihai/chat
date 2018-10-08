@@ -10,7 +10,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: []
+      messages: [],
+      userName: props.userName,
+      userId: props.userId,
     };
   }
 
@@ -32,7 +34,9 @@ class App extends Component {
           return;
 
         this.setState({
-          messages: messages
+          messages: messages,
+          userName: this.props.userName,
+          userId: this.props.userId,
         });
       }
     };
@@ -54,11 +58,9 @@ class App extends Component {
   sendMessage = (text) => {
     let newMessages = this.state.messages.slice(),
         timestamp = new Date().getTime(),
-        userName = 'Bob',
-        userId = '12345',
         message = new Message({
-          userName: userName,
-          userId: userId,
+          userName: this.props.userName,
+          userId: this.props.userId,
           text: text,
           timestamp: timestamp,
         });
@@ -70,7 +72,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="history-container">
-          <MessageHistory messages={this.state.messages} />
+          <MessageHistory messages={this.state.messages} userId={this.props.userId} />
         </div>
         <div className="input-container">
           <MessageInput sendMessage={this.sendMessage} />
