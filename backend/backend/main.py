@@ -21,4 +21,4 @@ def create_app():
 
 
 app = create_app()
-CORS(app, origins=['http://localhost:3000'])
+CORS(app, origins=['http://localhost:3000'], supports_credentials=True)

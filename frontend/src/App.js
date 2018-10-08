@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setInterval(this.loadMessages.bind(this), 200);
+    setTimeout(this.loadMessages.bind(this), 100);
   }
 
   /**
@@ -25,20 +25,27 @@ class App extends Component {
    */
   loadMessages() {
     let req = new XMLHttpRequest();
+    req.withCredentials = true;
     req.onreadystatechange = () => {
-      if (req.readyState === 4 && req.status === 200) {
-        let messages = JSON.parse(req.responseText).map((m) => new Message(m));
+      if (req.readyState !== 4)
+        return;
 
-        // Do not update state if not necessary
-        if (messages.length === this.state.messages.length)
-          return;
+      setTimeout(this.loadMessages.bind(this), 100);
 
-        this.setState({
-          messages: messages,
-          userName: this.props.userName,
-          userId: this.props.userId,
-        });
-      }
+      if (req.status !== 200)
+        return;
+
+      let messages = JSON.parse(req.responseText).map((m) => new Message(m));
+
+      // Do not update state if not necessary
+      if (messages.length === this.state.messages.length)
+        return;
+
+      this.setState({
+        messages: messages,
+        userName: this.props.userName,
+        userId: this.props.userId,
+      });
     };
     req.open('GET', `${API_ROOT}messages`);
     req.send();
@@ -56,8 +63,7 @@ class App extends Component {
   }
 
   sendMessage = (text) => {
-    let newMessages = this.state.messages.slice(),
-        timestamp = new Date().getTime(),
+    let timestamp = new Date().getTime(),
         message = new Message({
           userName: this.props.userName,
           userId: this.props.userId,

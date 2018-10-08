@@ -1,10 +1,14 @@
+import 'typeface-roboto';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
 import App from './App';
 import Registration from './Registration';
 import * as serviceWorker from './serviceWorker';
-import 'typeface-roboto';
+import { getCookies, setCookies } from './utils';
+import { API_ROOT } from './config';
+
 const uuidv4 = require('uuid/v4');
 
 const root = document.getElementById('root');
@@ -12,16 +16,23 @@ const root = document.getElementById('root');
 function handleRegister(userName) {
     let uuid = uuidv4();
 
-    localStorage.setItem('userName', userName);
-    localStorage.setItem('userId', uuid);
+    let req = new XMLHttpRequest();
+    req.withCredentials = true;
+    req.open('POST', `${API_ROOT}register/${uuid}`);
+    req.onreadystatechange = () => {
+        if (req.readyState === 4 && req.status === 200) {
 
-    ReactDOM.unmountComponentAtNode(root);
-    ReactDOM.render(<App userName={userName} userId={uuid} />, root);
+            // Save the credentials in-browser
+            setCookies({ userName: userName, userId: uuid });
+            ReactDOM.unmountComponentAtNode(root);
+            ReactDOM.render(<App userName={userName} userId={uuid} />, root);
+        }
+    }
+    req.send();
 }
 
 function initialize() {
-    let userName = localStorage.getItem('userName'),
-        userId = localStorage.getItem('userId');
+    let { userName, userId } = getCookies();
 
     if (userName && userId) {
         ReactDOM.render(<App userName={userName} userId={userId} />, root);
