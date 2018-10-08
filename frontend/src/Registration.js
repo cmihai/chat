@@ -18,7 +18,11 @@ class Registration extends Component {
                     <Typography variant="headline" className="headline">React-ive chat</Typography>
                     <Typography variant="body1">Hello! Please introduce yourself:</Typography>
                     <div style={{ display: 'flex', alignContent: 'center'}}>
-                        <TextField id="name" label="My name is..." style={{flex: 1}}></TextField>
+                        <TextField id="name" label="My name is..." style={{flex: 1}} onKeyUp={(e) => {
+                            if (e.keyCode === 13) {
+                                this.handleRegister();
+                            }
+                        }}></TextField>
                         <Button onClick={this.handleRegister.bind(this)}>Confirm</Button>
                     </div>
                 </Card>
